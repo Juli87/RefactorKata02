@@ -93,6 +93,7 @@ public class  TennisTest {
         TennisGame3 game = new TennisGame3("player1", "player2");
         checkAllScores(game);
     }
+
     @Test
     public void checkAllScoresTennisGame4() {
         TennisGame4 game = new TennisGame4(new Player("player1"), new Player("player2"));

@@ -1,20 +1,5 @@
 public class TennisGame4 implements TennisGame {
 
-    private final String LOVE = "Love";
-    private final String FIFTEEN = "Fifteen";
-    private final String THIRTY = "Thirty";
-    private final String FORTY = "Forty";
-
-    private final String LOVE_TIE = "Love-All";
-    private final String FIFTEEN_TIE = "Fifteen-All";
-    private final String THIRTY_TIE = "Thirty-All";
-    private final String OTHER_TIE = "Deuce";
-
-    private final Integer CERO = 0;
-    private final Integer QUINCE = 1;
-    private final Integer TREINTA = 2;
-    private final Integer CUARENTA = 3;
-
     private Player player1;
     private Player player2;
 
@@ -34,10 +19,10 @@ public class TennisGame4 implements TennisGame {
 
     @Override
     public String getScore() {
-        if (player1.getScore() == player2.getScore()){
-            return  getTieScoreName(player1, player2);
-        }else if (player1.getScore() >=  4){
-            return "";
+        if (isTieScore(player1, player2, player1.getScore())){
+            return getTieScoreName(player1, player2);
+        }else if (isGame(player1, player2)){
+            return getTopScore(player1, player2);
         }else {
             return getScoreName(player1) + "-" + getScoreName(player2);
         }
@@ -45,7 +30,7 @@ public class TennisGame4 implements TennisGame {
 
     private String getScoreName(Player player){
         if (isScore(player, CERO)){
-            return  LOVE;
+            return LOVE;
         }else if (isScore(player, QUINCE)){
             return FIFTEEN;
         }else if (isScore(player, TREINTA)){
@@ -63,21 +48,44 @@ public class TennisGame4 implements TennisGame {
             return FIFTEEN_TIE;
         }else if (isTieScore(player1, player2, TREINTA)){
             return THIRTY_TIE;
-        }else if (isTieScore(player1, player2, CUARENTA)){
+        }else {
             return OTHER_TIE;
         }
-        return "";
     }
 
     private Boolean isScore(Player player, Integer score){
         return player.getScore() == score;
     }
 
-
     private Boolean isTieScore(Player player1, Player player2, Integer score){
         return player1.getScore().equals(player2.getScore()) && player1.getScore() == score;
     }
 
+    private Boolean isGame(Player player1, Player player2){
+        return player1.getScore() >= GAME || player2.getScore() >= GAME;
+    }
 
-    
+    private String getTopScore(Player player1, Player player2){
+        if (isAdvantagePlayer1(player1.getScore(), player2.getScore())){
+            return VENTAJA_JUGADOR1;
+        } else if (isAdvantagePlayer2(player1.getScore(), player2.getScore())){
+            return VENTAJA_JUGADOR2;
+        }else if (isVictoryPlayer1(player1.getScore(), player2.getScore())){
+            return VICTORIA_JUGADOR1;
+        }else
+            return VICTORIA_JUGADOR2;
+    }
+
+    private Boolean isAdvantagePlayer1(Integer scorePlayer1, Integer scorePlayer2){
+        return ((scorePlayer1 - scorePlayer2) == 1);
+    }
+
+    private Boolean isAdvantagePlayer2(Integer scorePlayer1, Integer scorePlayer2){
+        return ((scorePlayer1 - scorePlayer2) == -1);
+    }
+
+    private Boolean isVictoryPlayer1(Integer scorePlayer1, Integer scorePlayer2){
+        return ((scorePlayer1 - scorePlayer2) >= 2);
+    }
+
 }
