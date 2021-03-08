@@ -11,9 +11,9 @@ public class TennisGame4 implements TennisGame {
     private final String OTHER_TIE = "Deuce";
 
     private final Integer CERO = 0;
-    private final Integer QUINCE = 15;
-    private final Integer TREINTA = 30;
-    private final Integer CUARENTA = 40;
+    private final Integer QUINCE = 1;
+    private final Integer TREINTA = 2;
+    private final Integer CUARENTA = 3;
 
     private Player player1;
     private Player player2;
@@ -25,7 +25,7 @@ public class TennisGame4 implements TennisGame {
 
     @Override
     public void wonPoint(String pointWinner) {
-        if(pointWinner.equals(player1)){
+        if(pointWinner.equals(player1.getPlayer())){
             player1.wonPoint();
         }else {
             player2.wonPoint();
