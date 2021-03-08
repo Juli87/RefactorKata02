@@ -24,6 +24,6 @@ public class Player {
     }
 
     public Integer wonPoint(){
-        return score++;
+        return score++ ;
     }
 }
